@@ -13,7 +13,10 @@ jobs:
     steps:
       - name: Run review
         run: |
-          curl --silent -H "Authorization: ${{ secrets.REVIEW_TOKEN }}" -H "Content-Type: application/json" http://10.255.248.1/review  -d '{"refspec": "refs/changes/63/125563/1", "project": "documentation-bot"}'
+          curl --silent \
+            -H "Authorization: ${{ secrets.REVIEW_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            ${REVIEW_SERVER}/review  -d '{"refspec": "$GITHUB_REFSPEC", "project": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"}'
 
       # -d@-
 
