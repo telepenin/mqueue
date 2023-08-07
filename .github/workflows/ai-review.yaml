@@ -3,17 +3,44 @@ name: AI review
 on:
   pull_request:
 
+env: 
+  GITHUB_REFSPEC: pull/${{ github.event.number }}/head:FETCH_HEAD
+  GITHUB_PROJECT_URL: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
+  REVIEW_SERVER: http://10.255.248.1
+  
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract all keywords from package.json
-        uses: sergeysova/jq-action@v2
-        id: keywords
-        with:
-          cmd: |
-            echo '{"a":1, "b": "2"}' | jq
-          multiline: true
+      - name: Run review
+        run: |
+            jq -n --arg refspec "${GITHUB_REFSPEC}" \
+                  --arg project "${GITHUB_PROJECT_URL}" \
+                  --arg template "${shellEscape(TEMPLATE)}" \
+                  --arg model_name "${MODEL_NAME}" \
+                  '{"refspec": \$refspec, "project": \$project, "template": \$template, "model_name": \$model_name}'  |
+            curl \
+                --silent
+                -H "Authorization: $REVIEW_TOKEN" \
+                -H "Content-Type: application/json" \
+                ${REVIEW_SERVER}/review -d@-
+
+      # - name: Extract all keywords from package.json
+      #   uses: sergeysova/jq-action@v2
+      #   id: keywords
+      #   with:
+      #     cmd: |
+      #       jq -n --arg refspec "${GITHUB_REFSPEC}" \
+      #             --arg project "${GITHUB_PROJECT_URL}" \
+      #             --arg template "${shellEscape(TEMPLATE)}" \
+      #             --arg model_name "${MODEL_NAME}" \
+      #             '{"refspec": \$refspec, "project": \$project, "template": \$template, "model_name": \$model_name}'  |
+      #       curl \
+      #           --silent
+      #           -H "Authorization: $REVIEW_TOKEN" \
+      #           -H "Content-Type: application/json" \
+      #           ${REVIEW_SERVER}/review -d@-
+      #     multiline: true
       
       - name: Show keywords
         run: |
