@@ -13,14 +13,14 @@ jobs:
     steps:
       - name: Run review
         run: |
-            jq -n --arg refspec "$GITHUB_REFSPEC" \
-              --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
-              '{"refspec": $refspec, "project": $project}' | \
-            curl \
-                --silent \
+            # jq -n --arg refspec "$GITHUB_REFSPEC" \
+            #   --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+            #   '{"refspec": $refspec, "project": $project}' | \
+            curl --silent \
                 -H "Authorization: $REVIEW_TOKEN" \
                 -H "Content-Type: application/json" \
-                ${REVIEW_SERVER}/review -d@-
+                ${REVIEW_SERVER}/review  -d '{"refspec": "$GITHUB_REFSPEC", "project": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"}'
+            # -d@-
 
       # - name: Extract all keywords from package.json
       #   uses: sergeysova/jq-action@v2
