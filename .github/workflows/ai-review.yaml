@@ -16,9 +16,7 @@ jobs:
         run: |
             jq -n --arg refspec "${GITHUB_REFSPEC}" \
                   --arg project "${GITHUB_PROJECT_URL}" \
-                  --arg template "${shellEscape(TEMPLATE)}" \
-                  --arg model_name "${MODEL_NAME}" \
-                  '{"refspec": \$refspec, "project": \$project, "template": \$template, "model_name": \$model_name}'  |
+                  '{"refspec": \$refspec, "project": \$project}'  |
             curl \
                 --silent
                 -H "Authorization: $REVIEW_TOKEN" \
