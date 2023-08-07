@@ -11,7 +11,8 @@ jobs:
         uses: sergeysova/jq-action@v2
         id: keywords
         with:
-          cmd: '{"a":1, "b": "2"}'
+          cmd: |
+            echo '{"a":1, "b": "2"}' | jq
           multiline: true
       
       - name: Show keywords
