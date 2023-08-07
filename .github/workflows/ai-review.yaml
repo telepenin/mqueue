@@ -5,7 +5,6 @@ on:
 
 env: 
   GITHUB_REFSPEC: pull/${{ github.event.number }}/head:FETCH_HEAD
-  GITHUB_PROJECT_URL: 
   REVIEW_SERVER: http://10.255.248.1
   
 jobs:
@@ -16,7 +15,7 @@ jobs:
         run: |
             jq -n --arg refspec "$GITHUB_REFSPEC" \
               --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
-              '{"refspec": $refspec, "project": $project}' |
+              '{"refspec": $refspec, "project": $project}' | \
             curl \
                 --silent \
                 -H "Authorization: $REVIEW_TOKEN" \
