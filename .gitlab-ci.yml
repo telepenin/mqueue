@@ -5,6 +5,8 @@ stages:
   - build
 
 build-job:
+  only:
+    - merge_requests
   stage: build
   tags:
     - ai-review
