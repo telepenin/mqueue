@@ -1,0 +1,12 @@
+variables:
+  GITLAB_REFSPEC: "A global variable"
+
+stages:
+  - build
+
+build-job:
+  stage: build
+  script: |
+    jq -n --arg refspec "$GITLAB_REFSPEC" \
+      --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+      '{"refspec": $refspec, "project": $project}'
