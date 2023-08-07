@@ -2,8 +2,6 @@ name: AI review
 
 on:
   pull_request:
-    branches:
-    - master
 
 jobs:
   build:
