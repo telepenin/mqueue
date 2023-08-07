@@ -6,8 +6,9 @@ stages:
 
 build-job:
   stage: build
+  tags:
+    - ai-review
   script: |
     jq -n --arg refspec "$GITLAB_REFSPEC" \
       --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
       '{"refspec": $refspec, "project": $project}'
-      
