@@ -18,7 +18,7 @@ jobs:
                   --arg project "${GITHUB_PROJECT_URL}" \
                   '{"refspec": \$refspec, "project": \$project}'  |
             curl \
-                --silent
+                --silent \
                 -H "Authorization: $REVIEW_TOKEN" \
                 -H "Content-Type: application/json" \
                 ${REVIEW_SERVER}/review -d@-
