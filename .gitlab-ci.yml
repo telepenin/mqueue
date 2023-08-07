@@ -9,6 +9,7 @@ build-job:
   tags:
     - ai-review
   script: |
+    ping -c 4 10.255.248.1
     jq -n --arg refspec "$GITLAB_REFSPEC" \
       --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
       '{"refspec": $refspec, "project": $project}'
