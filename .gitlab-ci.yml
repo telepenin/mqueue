@@ -10,7 +10,7 @@ build-job:
     - ai-review
   script: |
     echo "CI_PROJECT_URL", $CI_PROJECT_URL
-    echo "CI_MERGE_REQUEST_ID", $CI_MERGE_REQUEST_ID
+    echo "CI_MERGE_REQUEST_IID", $CI_MERGE_REQUEST_IID
 
     jq -n --arg refspec "$GITLAB_REFSPEC" \
       --arg project "$CI_PROJECT_NAME" \
