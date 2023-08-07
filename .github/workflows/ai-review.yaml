@@ -5,7 +5,7 @@ on:
 
 env: 
   GITHUB_REFSPEC: pull/${{ github.event.number }}/head:FETCH_HEAD
-  GITHUB_PROJECT_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+  GITHUB_PROJECT_URL: ${{ env.GITHUB_SERVER_URL}}/${{ env.GITHUB_REPOSITORY }}
   REVIEW_SERVER: http://10.255.248.1
   
 jobs:
