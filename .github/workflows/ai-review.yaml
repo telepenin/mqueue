@@ -1,0 +1,45 @@
+name: AI review
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract all keywords from package.json
+        uses: sergeysova/jq-action@v2
+        id: keywords
+        with:
+          cmd: '{"a":1, "b": "2"}'
+          multiline: true
+      
+      - name: Show keywords
+        run: |
+          keywords="${{ steps.keywords.outputs.value }}"
+          for keyword in $keywords; do
+            echo "$keyword"
+          done
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Build output
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Build output
+            ${{ steps.build.outputs.build-log }}
+
+            Keywords:
+            ${{ steps.keywords.outputs.value }}
+          edit-mode: replace
