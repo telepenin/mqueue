@@ -9,7 +9,9 @@ build-job:
   tags:
     - ai-review
   script: |
-    ping -c 4 10.255.248.1
+    echo "CI_PROJECT_URL", $CI_PROJECT_URL
+    echo "CI_MERGE_REQUEST_ID", $CI_MERGE_REQUEST_ID
+
     jq -n --arg refspec "$GITLAB_REFSPEC" \
-      --arg project "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+      --arg project "$CI_PROJECT_NAME" \
       '{"refspec": $refspec, "project": $project}'
