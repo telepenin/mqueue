@@ -18,7 +18,7 @@ build-job:
     echo "REVIEW_TOKEN", $REVIEW_TOKEN
 
     jq -n --arg refspec "$CI_MERGE_REQUEST_REF_PATH" \
-      --arg project "$CI_PROJECT_NAME" \
+      --arg project "$CI_PROJECT_URL" \
       '{"refspec": $refspec, "project": $project}' | \
     curl \
       --silent \
