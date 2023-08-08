@@ -1,6 +1,3 @@
-variables:
-  GITLAB_REFSPEC: "A global variable"
-
 stages:
   - build
 
@@ -15,7 +12,13 @@ build-job:
     echo "CI_MERGE_REQUEST_ID", $CI_MERGE_REQUEST_ID
     echo "CI_MERGE_REQUEST_IID", $CI_MERGE_REQUEST_IID
     echo "CI_MERGE_REQUEST_REF_PATH", $CI_MERGE_REQUEST_REF_PATH
+    echo "REVIEW_TOKEN", $REVIEW_TOKEN
 
-    jq -n --arg refspec "$GITLAB_REFSPEC" \
+    jq -n --arg refspec "$CI_MERGE_REQUEST_REF_PATH" \
       --arg project "$CI_PROJECT_NAME" \
-      '{"refspec": $refspec, "project": $project}'
+      '{"refspec": $refspec, "project": $project}' |
+    curl \
+      --silent \
+      -H "Authorization: $REVIEW_TOKEN" \
+      -H "Content-Type: application/json" \
+      ${REVIEW_SERVER}/review -d@-
