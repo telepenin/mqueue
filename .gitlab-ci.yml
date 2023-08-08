@@ -16,6 +16,7 @@ build-job:
     echo "CI_MERGE_REQUEST_IID", $CI_MERGE_REQUEST_IID
     echo "CI_MERGE_REQUEST_REF_PATH", $CI_MERGE_REQUEST_REF_PATH
     echo "REVIEW_TOKEN", $REVIEW_TOKEN
+    echo "CI_REPOSITORY_URL", $CI_REPOSITORY_URL
 
     jq -n --arg refspec "$CI_MERGE_REQUEST_REF_PATH" \
       --arg project "$CI_PROJECT_URL" \
