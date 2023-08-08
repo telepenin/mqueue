@@ -1,3 +1,6 @@
+variables:
+  REVIEW_SERVER: http://10.255.248.1
+
 stages:
   - build
 
