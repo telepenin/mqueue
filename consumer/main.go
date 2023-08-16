@@ -29,6 +29,10 @@ func init() {
 	}
 }
 
+func notUsed() {
+	panic("Some sort of panic")
+}
+
 func main() {
 	zapLogger, _ := zap.NewDevelopment()
 	defer zapLogger.Sync()
